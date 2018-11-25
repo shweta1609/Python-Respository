@@ -1,5 +1,4 @@
-import sys
-
+import fileinput
 
 class CashRegister:
 
@@ -121,18 +120,19 @@ class CashRegister:
 
 
 def main():
-    if len(sys.argv) is not 3:
-        print "Invalid Arguments"
-    else:
-        purchase_price = float(sys.argv[1])
-        cash = float(sys.argv[2])
-        if purchase_price > cash:
-            print "ERROR"
-        elif purchase_price == cash:
-            print "ZERO"
+    for args in fileinput.input():
+        if len(args.split(';')) is not 2:
+            print "Invalid Arguments"
         else:
-            cr = CashRegister(purchase_price, cash)
-            cr.print_change()
+            purchase_price = float(args.split(';')[0])
+            cash = float(args.split(';')[1])
+            if purchase_price > cash:
+                print "ERROR"
+            elif purchase_price == cash:
+                print "ZERO"
+            else:
+                cr = CashRegister(purchase_price, cash)
+                cr.print_change()
 
 
 if __name__ == '__main__':
